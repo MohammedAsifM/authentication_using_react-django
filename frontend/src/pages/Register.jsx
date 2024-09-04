@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
-import '../App.css'; // Make sure the path is correct
+import { useNavigate } from "react-router-dom"; 
+import '../App.css'; 
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -13,6 +14,8 @@ export default function Register() {
   const [isLoading, setIsLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState(null);
   const [error, setError] = useState(null);
+
+  const navigate = useNavigate(); 
 
   const handleChange = (e) => {
     setFormData({
@@ -36,6 +39,12 @@ export default function Register() {
         formData
       );
       setSuccessMessage("Registration Successful!");
+      
+     
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
+
     } catch (error) {
       if (error.response && error.response.data) {
         Object.keys(error.response.data).forEach(field => {

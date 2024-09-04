@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
-import '../App.css'; // Make sure the path is correct
+import { useNavigate } from "react-router-dom";
+import '../App.css'; 
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -10,7 +11,9 @@ export default function Login() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [successMessage, setSuccessMessage] = useState(null); // Added successMessage state
+  const [successMessage, setSuccessMessage] = useState(null); 
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
@@ -33,7 +36,12 @@ export default function Login() {
       console.log("Login successful!", response.data);
       localStorage.setItem("accessToken", response.data.tokens.access);
       localStorage.setItem("refreshToken", response.data.tokens.refresh);
-      setSuccessMessage("Login successful!"); // Set success message on successful login
+      setSuccessMessage("Login successful!"); 
+      
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
+     
     } catch (error) {
       if (error.response && error.response.data) {
         setError("Login failed. Please check your credentials.");
